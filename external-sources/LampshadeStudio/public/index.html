@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Lampshade Studio</title><meta name="description" content="Shape, size and export lampshades for printing and CAD.">
+  <link rel="icon" href="icon.svg"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="library.css"><link rel="stylesheet" href="exports.css">
+  <script type="importmap">{"imports":{"three":"./vendor/three.module.js"}}</script>
+</head>
+<body>
+<header>
+  <div class="brand"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M9 4h14l6 23H3L9 4Z M13 4l-2 23M19 4l2 23M16 4v23"/></svg><div>Lampshade <b>Studio</b><span>SHAPE / SIZE / MAKE</span></div></div>
+  <div class="header-actions"><a href="chandelier.html" style="color:#efac66;text-decoration:none;font-size:13px">Grow-light chandelier ↗</a><span class="local">LOCAL WORKSPACE</span><button id="load" class="quiet">Open design</button><button id="save" class="quiet">Save design</button><button id="help" class="icon-button" aria-label="Help">?</button></div>
+</header>
+<main>
+<aside aria-label="Design controls">
+  <section class="envelope">
+    <div class="section-title"><span class="step">01</span><h2>Set the envelope</h2><span class="unit">mm</span></div>
+    <p class="hint">Your final outside dimensions.</p>
+    <div class="dimensions">
+      <label>Width <span>X</span><input id="boxWidth" type="number" min="40" max="400" step="1" value="180"></label>
+      <label>Depth <span>Y</span><input id="boxDepth" type="number" min="40" max="400" step="1" value="180"></label>
+      <label>Height <span>Z</span><input id="height" type="number" min="60" max="350" step="1" value="200"></label>
+    </div>
+    <label class="check-label"><input id="round" type="checkbox" checked> Keep width and depth equal</label>
+  </section>
+  <section>
+    <div class="section-title"><span class="step">02</span><h2>Shape the shade</h2><button id="reset" class="text-button">Reset</button></div>
+    <button id="browseStyles" class="current-preset"><span class="eyebrow">DESIGN LIBRARY · 11 FORMS</span><span id="currentStyleName">Spiral</span><span id="currentStyleDescription">Fine ribs on a gently swelling body.</span><span class="browse-label">Browse forms <span>⊞</span></span></button>
+    <div class="variation-actions"><button id="vary">Try a variation</button><button id="undoVariation" disabled title="Restore before the last preset or variation">Undo</button></div>
+    <label class="field-label" for="texture">Surface texture</label><select id="texture"><option value="ribs">Ribs & folds</option><option value="woven">Woven relief</option><option value="smooth">Smooth</option><option value="facet">Triangular facets</option></select>
+    <p id="textureNote" class="hint tiny" hidden>Continuous diamond relief, without perforations.</p>
+    <div class="control" data-key="twist"><label for="twist">Twist</label><div class="number-unit"><input id="twist" type="number" min="-180" max="180" step="1"><span>°</span></div><input aria-label="Twist slider" type="range" min="-180" max="180" step="1"></div>
+    <div class="control" data-key="ribs"><label for="ribs" id="ribsLabel">Ribs around</label><div class="number-unit"><input id="ribs" type="number" min="12" max="80" step="1"></div><input aria-label="Rib count slider" type="range" min="12" max="80" step="1"></div>
+    <div class="control" data-key="depth"><label for="depth">Texture depth</label><div class="number-unit"><input id="depth" type="number" min="0" max="12" step="0.1"><span>mm*</span></div><input aria-label="Texture depth slider" type="range" min="0" max="12" step="0.1"></div>
+    <div class="control woven-only" data-key="weaveRows" hidden><label for="weaveRows">Weave rows</label><div class="number-unit"><input id="weaveRows" type="number" min="6" max="32" step="1"></div><input aria-label="Weave rows slider" type="range" min="6" max="32" step="1"></div>
+    <div class="control facet-only" data-key="rows" hidden><label for="rows">Facet rows</label><div class="number-unit"><input id="rows" type="number" min="4" max="24" step="1"></div><input aria-label="Facet rows slider" type="range" min="4" max="24" step="1"></div>
+    <details open><summary>Profile proportions</summary>
+      <label class="field-label" for="profile">Silhouette</label><select id="profile"><option value="classic">Continuous curve</option><option value="capsule">Rounded capsule</option><option value="lantern">Stacked lantern</option><option value="helix">Orbiting bands</option></select>
+      <label class="field-label" for="section">Cross-section</label><select id="section"><option value="round">Round</option><option value="square">Soft square</option></select>
+      <div class="control square-only" data-key="roundness" hidden><label for="roundness">Square character</label><div class="number-unit"><input id="roundness" type="number" min="2" max="6" step="0.1"></div><input aria-label="Square character slider" type="range" min="2" max="6" step="0.1"></div>
+      <div class="control capsule-only" data-key="shoulder" hidden><label for="shoulder">Shoulder length</label><div class="number-unit"><input id="shoulder" type="number" min="0.1" max="0.4" step="0.01"><span>× H</span></div><input aria-label="Shoulder length slider" type="range" min="0.1" max="0.4" step="0.01"></div>
+      <div class="control bands-only" data-key="bands" hidden><label for="bands">Stacked bands</label><div class="number-unit"><input id="bands" type="number" min="2" max="8" step="1"></div><input aria-label="Stacked bands slider" type="range" min="2" max="8" step="1"></div>
+      <div class="control bands-only" data-key="bandDepth" hidden><label for="bandDepth">Band fullness</label><div class="number-unit"><input id="bandDepth" type="number" min="0" max="18" step="0.5"><span>mm*</span></div><input aria-label="Band fullness slider" type="range" min="0" max="18" step="0.5"></div>
+      <div class="control" data-key="bottom"><label for="bottom">Lower diameter</label><div class="number-unit"><input id="bottom" type="number" min="50" max="260" step="1"><span>mm*</span></div><input aria-label="Lower diameter slider" type="range" min="50" max="260" step="1"></div>
+      <div class="control" data-key="top"><label for="top">Upper diameter</label><div class="number-unit"><input id="top" type="number" min="50" max="260" step="1"><span>mm*</span></div><input aria-label="Upper diameter slider" type="range" min="50" max="260" step="1"></div>
+      <div class="control" data-key="bulge"><label for="bulge">Belly / waist</label><div class="number-unit"><input id="bulge" type="number" min="-40" max="60" step="1"><span>mm*</span></div><input aria-label="Belly slider" type="range" min="-40" max="60" step="1"></div>
+      <p class="hint tiny">*Before fitting. These set the proportions; the envelope controls the final size.</p>
+    </details>
+    <details><summary>Flow & sculpting</summary>
+      <div class="control" data-key="sway"><label for="sway">Fold sway</label><div class="number-unit"><input id="sway" type="number" min="0" max="40" step="1"><span>°</span></div><input aria-label="Fold sway slider" type="range" min="0" max="40" step="1"></div>
+      <div class="control" data-key="swayCycles"><label for="swayCycles">Sway cycles</label><div class="number-unit"><input id="swayCycles" type="number" min="0.5" max="3" step="0.25"></div><input aria-label="Sway cycles slider" type="range" min="0.5" max="3" step="0.25"></div>
+      <div class="control" data-key="lobes"><label for="lobes">Broad folds</label><div class="number-unit"><input id="lobes" type="number" min="2" max="12" step="1"></div><input aria-label="Broad wave count slider" type="range" min="2" max="12" step="1"></div>
+      <div class="control" data-key="wave"><label for="wave">Broad fold depth</label><div class="number-unit"><input id="wave" type="number" min="0" max="20" step="0.5"><span>mm*</span></div><input aria-label="Wave depth slider" type="range" min="0" max="20" step="0.5"></div>
+    </details>
+  </section>
+  <section id="bulbSection" class="bulb-section">
+    <div class="section-title"><span class="step">03</span><h2>Bulb & clearance</h2></div>
+    <label class="field-label" for="bulbType">E27 bulb reference</label><select id="bulbType"><option value="st64">Edison ST64 · 64 × 140 mm</option><option value="a60">Standard A60 · 60 × 106 mm</option></select>
+    <p class="hint tiny">E27 is the screw fitting. Bulb sizes vary by model.</p>
+    <div class="bulb-dimensions"><label>Diameter, mm<input id="bulbDiameter" type="number" min="30" max="150" step="1" value="64"></label><label>Total height, mm<input id="bulbHeight" type="number" min="70" max="250" step="1" value="140"></label></div>
+    <label class="field-label" for="bulbOrientation">Orientation</label><select id="bulbOrientation"><option value="upright">Upright · base below</option><option value="pendant">Pendant · base above</option></select>
+    <div class="control" data-key="bulbZ"><label for="bulbZ">Bulb bottom Z</label><div class="number-unit"><input id="bulbZ" type="number" min="-250" max="400" step="1"><span>mm</span></div><input aria-label="Bulb bottom Z slider" type="range" min="-250" max="400" step="1"></div>
+    <div class="control" data-key="bulbClearance"><label for="bulbClearance">Target radial gap</label><div class="number-unit"><input id="bulbClearance" type="number" min="0" max="30" step="0.5"><span>mm</span></div><input aria-label="Target radial gap slider" type="range" min="0" max="30" step="0.5"></div>
+    <label class="check-label"><input id="bulbVisible" type="checkbox" checked> Show bulb guide</label><label class="check-label"><input id="xrayShade" type="checkbox"> X-ray shade</label>
+    <div id="clearanceReport" class="clearance-report" role="status" aria-live="polite"><b>Checking clearance…</b></div>
+    <p class="hint tiny">Dimensioned proxy with an approximate glass outline and nominal Ø27 cap. Radial fit only; the gap is not a heat rating. Confirm your actual bulb and holder.</p>
+    <a id="bulbSource" class="bulb-source" href="https://www.lighting.philips.co.uk/consumer/p/led-filament-bulb-clear-60w-st64-e27/8719514323919" target="_blank" rel="noreferrer">Manufacturer dimensions</a>
+    <button id="exportBulb" class="bulb-export" disabled>Export bulb reference STEP</button><p class="hint tiny">Separate reference file. Shade exports contain the shade only.</p>
+  </section>
+  <section class="export-options">
+    <div class="section-title"><span class="step">04</span><h2>Prepare for export</h2></div>
+    <label class="field-label" for="exportMode">Export geometry</label>
+    <select id="exportMode"><option value="hollow">Hollow shade · open ends</option><option value="solid">Solid envelope · vase slicing</option></select>
+    <div class="control" data-key="wall" id="wallControl"><label for="wall">Radial wall</label><div class="number-unit"><input id="wall" type="number" min="0.4" max="3" step="0.1"><span>mm</span></div><input aria-label="Radial wall slider" type="range" min="0.4" max="3" step="0.1"></div>
+    <p class="hint" id="exportHint">Open at both ends, ready for your mounting details. Wall is measured radially, not normal to the ribs.</p>
+    <p class="hint tiny">For spiral vase printing, choose <b>Solid envelope</b> and export STL. Choose your file format beside the export button.</p>
+    <p class="hint tiny" id="nxHint" hidden><b>For Siemens NX:</b> binary Parasolid (.x_b) is the compact choice; text (.x_t) is also available. Export uses the installed NX translator and verifies the solid by importing it back. Keep Hollow shade to add mounting details in CAD.</p>
+  </section>
+</aside>
+<section class="workspace" aria-label="3D workspace">
+  <div class="workspace-top"><div><span class="eyebrow">LIVE MODEL</span><h1 id="modelTitle">Spiral study</h1></div><div class="view-switch" role="group" aria-label="Preview lighting"><button id="studioLight" class="selected">Studio</button><button id="glowLight">Lit</button></div></div>
+  <div id="viewer" role="img" aria-label="Interactive 3D lampshade. Drag to rotate and scroll to zoom."></div>
+  <div class="view-controls"><button data-view="perspective" class="selected" title="Perspective view">3D</button><button data-view="front">Front</button><button data-view="top">Top</button><button id="boxToggle" aria-pressed="true" title="Show bounding box">Box</button><button id="bulbToggle" aria-pressed="true" title="Show E27 bulb guide">Bulb</button></div>
+  <button id="bulbBadge" class="bulb-badge" title="Open bulb and clearance settings"><span>E27 · ST64</span><b>Checking fit…</b></button>
+  <div class="swatches" role="group" aria-label="Preview color"><button class="selected" data-color="#e9ded1" style="--swatch:#e9ded1" aria-label="Ivory"></button><button data-color="#de9b5d" style="--swatch:#de9b5d" aria-label="Amber"></button><button data-color="#a6bacb" style="--swatch:#a6bacb" aria-label="Mist blue"></button><button data-color="#a697b6" style="--swatch:#a697b6" aria-label="Mauve"></button><button data-color="#5a616d" style="--swatch:#5a616d" aria-label="Graphite"></button></div>
+  <div class="model-info"><span class="eyebrow">OUTSIDE ENVELOPE</span><div id="bounds">180 × 180 × 200 <span>mm</span></div><span id="geometryLabel">Hollow CAD body · Z up</span></div>
+  <div class="orbit-hint">Drag to orbit <span>·</span> Scroll to zoom</div>
+  <footer class="export-bar"><div class="export-copy"><b id="status" role="status" aria-live="polite">Preparing your shade…</b><span id="exportDetail">STEP · millimetres · exact envelope</span></div><div class="export-actions"><label class="export-choice">Format<select id="exportFormat"><option value="stl">STL · slicer</option><option value="step" selected>STEP · CAD</option><option value="brep">BREP · CAD</option><option value="x_b">NX · Parasolid (.x_b)</option><option value="x_t">NX · Parasolid (.x_t)</option></select></label><label class="export-choice" id="stlQualityControl" hidden>Mesh detail<select id="stlQuality"><option value="lite">Lite · smaller</option><option value="balanced" selected>Balanced</option><option value="fine">Fine · larger</option></select></label><button id="export" class="primary" disabled>Export STEP <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v9m-4-4 4 4 4-4M4 13v4h12v-4"/></svg></button></div></footer>
+</section>
+</main>
+<input type="file" id="designFile" accept=".json" hidden>
+<dialog id="libraryDialog" class="library-dialog"><div class="library-header"><div><span class="eyebrow">A DIFFERENT STARTING POINT</span><h2>Find your form.</h2><p>Eleven shapes. Mix the profile, texture and movement to make them yours.</p></div><button id="closeLibrary" class="close" aria-label="Close design library">×</button></div><div class="library-settings"><label class="check-label"><input id="keepEnvelope" type="checkbox" checked> Keep my current bounding box</label><span>Each preview uses its suggested proportions.</span></div><div id="libraryGrid" class="library-grid"></div></dialog>
+<dialog id="helpDialog"><button id="closeHelp" class="close" aria-label="Close help">×</button><span class="eyebrow">FROM SHADE TO PART</span><h2>Your CAD workflow</h2><ol><li>Set the outside width, depth and height in millimetres. Unlock width and depth for an oval shade.</li><li>Choose a style and adjust the profile. Changing styles keeps your target envelope.</li><li>Export a hollow STEP or BREP for adding mounting and fitting geometry in CAD. The radial wall is an approximation, not constant normal thickness.</li><li>Save the design file to preserve the generator parameters. A STEP contains boundary geometry, not a native parametric feature tree.</li></ol><h3>For vase-mode printing</h3><p>Choose <b>STL</b> beside the export button and use <b>Solid envelope</b> geometry. Balanced mesh detail is the default; Lite makes smaller files and Fine adds detail. Import STL as millimetres. In the slicer, enable spiral vase mode, one perimeter, no infill, no top layers and no bottom layers for an open sleeve. Set the extrusion width in the slicer. Check the sliced path before printing.</p><p>Any base or socket interface you add can change vase-mode compatibility. Use LED lighting and choose your material and clearances for the actual operating temperature.</p><p class="source-links">References: <a href="https://makerworld.com/en/models/2005410-spiral-lamp-e27" target="_blank" rel="noreferrer">Spiral</a> · <a href="https://makerworld.com/en/models/873685-lampshade" target="_blank" rel="noreferrer">Wave</a> · <a href="https://makerworld.com/en/models/1532766-lampshade-triangle-displaced" target="_blank" rel="noreferrer">Facet</a> · <a href="https://help.prusa3d.com/article/layers-and-perimeters_1748" target="_blank" rel="noreferrer">Vase slicing</a></p><p class="hint">Original procedural designs inspired by your references. Spiral and Wave use spline surfaces. Facet uses planar CAD faces. Preview color is illustrative.</p></dialog>
+<script type="module" src="app.js"></script>
+</body></html>
+
+

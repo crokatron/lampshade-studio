@@ -1,0 +1,13 @@
+.export-actions{display:flex;align-items:flex-end;gap:10px;flex-shrink:0}
+.export-choice{display:block;color:var(--muted);font-size:11px;line-height:1.3}
+.export-choice select{display:block;min-width:120px;width:auto;margin-top:5px;padding:10px 8px;height:43px}
+#exportFormat{width:184px}
+.export-actions .primary{height:43px;padding:10px 15px;gap:12px}
+.export-bar{flex-wrap:wrap;row-gap:12px}
+.export-copy{flex:1 1 210px}
+.export-copy span{max-width:unset;line-height:1.45}
+@media(max-width:1150px){.export-bar{padding:14px 20px;gap:9px}.export-copy{flex-basis:100%}.export-actions{width:100%}.export-actions .primary{margin-left:auto}.model-info{bottom:165px}.orbit-hint{bottom:165px}#viewer{bottom:145px}}
+@media(max-width:640px){.workspace{height:650px}.model-info{bottom:167px}.export-actions{gap:7px}.export-choice select{min-width:102px;font-size:12px}.export-actions .primary{padding:10px;font-size:12px}.export-copy b{font-size:12px}}
+@media(min-width:641px) and (max-width:760px){.export-bar{padding:14px 12px}.export-actions{gap:7px}.export-choice select{min-width:91px;font-size:12px}.export-actions .primary{padding:10px 8px;font-size:12px}}
+@media(max-width:360px){.export-bar{padding:12px}.export-choice select{min-width:91px}.export-actions{gap:5px}}
+@media(max-width:760px){#exportFormat{width:110px;min-width:0}}

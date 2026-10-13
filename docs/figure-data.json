@@ -1,0 +1,75 @@
+[
+  {
+    "boxes": [
+      {
+        "h": 54.09375,
+        "selector": "#boxWidth",
+        "text": "The envelope includes texture peaks. Width and depth can be linked or separated.",
+        "title": "Set final size",
+        "w": 97.65625,
+        "x": 23,
+        "y": 197.828125
+      },
+      {
+        "h": 181.6875,
+        "selector": "#browseStyles",
+        "text": "Pick a form, then tune texture and twist while keeping the envelope.",
+        "title": "Choose a starting form",
+        "w": 293,
+        "x": 23,
+        "y": 366.5
+      },
+      {
+        "h": 51,
+        "selector": "#exportFormat",
+        "text": "STL for slicing; STEP/BREP for CAD. Save design JSON separately.",
+        "title": "Choose the right output",
+        "w": 192,
+        "x": 1568.25,
+        "y": 1341
+      }
+    ],
+    "height": 1408,
+    "width": 2055,
+    "title": "Actual tool · controls at a glance",
+    "caption": "Actual application screenshot. Numbered boxes point to the controls described below. ",
+    "key": "lampshade-studio"
+  },
+  {
+    "boxes": [
+      {
+        "h": 39,
+        "selector": "#w",
+        "text": "Move the width slider and compare the illustrated shade.",
+        "title": "Change the envelope",
+        "w": 260,
+        "x": 320,
+        "y": 379.515625
+      },
+      {
+        "h": 52,
+        "selector": "#format",
+        "text": "Compare a print-mesh preview with a hollow CAD concept.",
+        "title": "Choose the purpose",
+        "w": 260,
+        "x": 318,
+        "y": 613.515625
+      },
+      {
+        "h": 532.9375,
+        "selector": "#result",
+        "text": "The dummy engine reports inputs; it does not certify a solid.",
+        "title": "Inspect the example output",
+        "w": 517.078125,
+        "x": 1228.90625,
+        "y": 325.515625
+      }
+    ],
+    "height": 1408,
+    "width": 2055,
+    "key": "simulation",
+    "title": "Try the working offline example",
+    "caption": "Screenshot of this project’s interactive demo. Side-by-side services are explicitly simulated.",
+    "cropHeight": 899.453125
+  }
+]

@@ -1,0 +1,72 @@
+{
+  "slug": "lampshade-studio",
+  "title": "Lampshade Studio",
+  "summary": "Create procedural lampshades by setting a final envelope and varying form, texture and twist. Preview the shade and bulb fit, then export a print mesh or CAD body. The included grow-light chandelier workspace extends the same project into an assembly; it is separate from a finished, validated lighting product.",
+  "features": [
+    [
+      "Envelope",
+      "Final outside width, depth and height in mm; unlink width/depth for an oval.",
+      "Design and export"
+    ],
+    [
+      "Form library",
+      "Eleven forms with ribs/folds, woven relief, smooth and triangular-facet texture choices.",
+      "Design and export"
+    ],
+    [
+      "Profile controls",
+      "Silhouette, cross-section, belly/waist and twist vary proportions inside the envelope.",
+      "Design and export"
+    ],
+    [
+      "Bulb reference",
+      "Dimensioned E27 bulb guides, orientation and radial clearance preview.",
+      "Design and export"
+    ],
+    [
+      "Geometry modes",
+      "Hollow material body for CAD, or filled outer envelope for vase slicing.",
+      "Design and export"
+    ],
+    [
+      "Export formats",
+      "STL, STEP and OpenCascade BREP; Parasolid requires a compatible licensed local NX installation.",
+      "Design and export"
+    ],
+    [
+      "Design persistence",
+      "Save/Open JSON, hosted NAS drafts and separate chandelier design controls.",
+      "Design and export"
+    ]
+  ],
+  "workflows": [
+    [
+      "Design a shade to a fixed size",
+      [
+        "Set Width, Depth and Height first; these describe the final outside dimensions including texture peaks. Unlink width/depth for an oval.",
+        "Browse forms and select a starting style. Changing the style preserves the envelope rather than silently changing the final size.",
+        "Adjust texture, twist and profile. Values marked mm* are source-profile proportions before fitting, not necessarily final rim diameters.",
+        "Orbit the model, compare Front and Top and inspect the box and bulb guides. A radial fit check is not a heat rating or a complete holder-fit check."
+      ]
+    ],
+    [
+      "Export for spiral-vase printing",
+      [
+        "Choose Solid envelope and STL. Select Lite, Balanced or Fine mesh detail according to the intended print and file size.",
+        "Import into the slicer as millimetres. For an open sleeve, use the intended spiral-vase setup and inspect zero top/bottom layers, perimeter and toolpath.",
+        "Inspect overhangs and the complete sliced preview. The preview shows a sleeve but the exported solid envelope intentionally has caps for the slicer to interpret.",
+        "Save the JSON separately so you can regenerate another size. STL does not contain the procedural design controls."
+      ]
+    ],
+    [
+      "Export a CAD body",
+      [
+        "Choose Hollow shade when you want a material body to add mounting details to in CAD. The wall control is radial, not uniform surface-normal thickness.",
+        "Export STEP or BREP and wait for the server’s geometry checks. Complex surface combinations may take longer than STL.",
+        "Import the result into CAD, inspect bounds and openings, then add your fittings. The imported body has surfaces, not the original generator feature history.",
+        "Parasolid options require the local NX translator and licence; disabled NAS options are expected when NX is absent."
+      ]
+    ]
+  ],
+  "limits": "CAD validity and dimensions do not certify a physical print, mounting system or thermal safety. No new physical print or heat test was performed. Third-party reference designs and libraries retain their own rights."
+}
