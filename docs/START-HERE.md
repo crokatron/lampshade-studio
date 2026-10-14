@@ -12,4 +12,4 @@ Procedural shade/chandelier geometry with final envelope dimensions, patterns an
 
 **Next maintainer action:** Reimport candidate exports and measure bounds/solids, then review real slicer paths, mounting and heat conditions. Radial wall offset is not constant normal thickness. Successful CAD validation is not a physical-print or thermal certification.
 
-**Status:** private upload verified on 14 October 2026. These guides accompany the private source package. Live runtime, data backups and full recovery were not retested. Public release needs separate approval.
+**Status:** private upload verified on 14 October 2026. These guides accompany the source package. Live runtime, data backups and full recovery were not retested. Public sharing was authorised on 14 October 2026; the NAS backup remains private.
