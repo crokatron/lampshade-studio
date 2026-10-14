@@ -1,5 +1,7 @@
 # Lampshade Studio
 
+**Maintaining this project? [Start here](docs/START-HERE.md) · [Detailed handover](docs/HANDOVER.md)**
+
 Create procedural lampshades by setting a final envelope and varying form, texture and twist. Preview the shade and bulb fit, then export a print mesh or CAD body. The included grow-light chandelier workspace extends the same project into an assembly; it is separate from a finished, validated lighting product.
 
 **Private preview · not published.**
@@ -12,7 +14,7 @@ Download `demo.html` using GitHub’s Download raw file control, then open it in
 
 ### Actual tool · controls at a glance
 
-Actual application screenshot. Numbered boxes point to the controls described below. 
+Actual application screenshot. Numbered boxes point to the controls described below.
 
 ![Lampshade Studio — numbered controls](docs/images/guide-1.jpg)
 
